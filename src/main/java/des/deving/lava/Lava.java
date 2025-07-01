@@ -1,5 +1,7 @@
 package des.deving.lava;
 
+import des.deving.lava.listeners.Shear_Sheep;
+import des.deving.lava.listeners.XPBottleBreakListener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +18,8 @@ public final class Lava extends JavaPlugin implements Listener {
         System.out.println("Plugin Successfully Loaded!");
 
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new XPBottleBreakListener(), this );
+        getServer().getPluginManager().registerEvents(new Shear_Sheep(), this);
     }
 
     @Override
