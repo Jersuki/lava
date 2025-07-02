@@ -1,13 +1,13 @@
 package des.deving.lava;
 
-import des.deving.lava.listeners.Shear_Sheep;
-import des.deving.lava.listeners.XPBottleBreakListener;
+import des.deving.lava.listeners.JoinLeaveListener;
+import org.bukkit.ChatColor;
+import org.bukkit.command.BlockCommandSender;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerBedLeaveEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Lava extends JavaPlugin implements Listener {
@@ -18,8 +18,7 @@ public final class Lava extends JavaPlugin implements Listener {
         System.out.println("Plugin Successfully Loaded!");
 
         getServer().getPluginManager().registerEvents(this, this);
-        getServer().getPluginManager().registerEvents(new XPBottleBreakListener(), this );
-        getServer().getPluginManager().registerEvents(new Shear_Sheep(), this);
+        getServer().getPluginManager().registerEvents(new JoinLeaveListener(), this );
     }
 
     @Override
@@ -28,23 +27,23 @@ public final class Lava extends JavaPlugin implements Listener {
         System.out.println("Plugin Successfully Unloaded!");
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        // /die - kills the player
+        if (command.getName().equalsIgnoreCase("die")){
 
-        event.setJoinMessage("Welcome "+event.getPlayer().getName()+" to the server!");
+            if (sender instanceof Player p) {
+                p.setHealth(0.0);
+                p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Why would you want to die? Alright, your wish is my command.");
+                return true;
+            }else if (sender instanceof ConsoleCommandSender){
+                System.out.println("This command can only be run by players!");
+            }else if(sender instanceof BlockCommandSender){
+                System.out.println("This command can only be run by players!");
+            }
 
+        }
+        return super.onCommand(sender, command, label, args);
     }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event){
-        event.setQuitMessage("Goodbye "+event.getPlayer().getName()+"!");
-    }
-
-    @EventHandler
-    public void onLeaveBed(PlayerBedLeaveEvent event){
-        Player player = event.getPlayer();
-        player.sendMessage ("Wowwww you got out of the bed? Weirdo");
-    }
-
 }
 

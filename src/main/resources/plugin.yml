@@ -4,4 +4,7 @@ main: des.deving.lava.Lava
 api-version: '1.21'
 authors: [Destroyer5356]
 description: my first plugin, it's gonna be lava rising.
-
+commands:
+    die:
+        description: An easy way to commit self die.
+        usage: /<command>
